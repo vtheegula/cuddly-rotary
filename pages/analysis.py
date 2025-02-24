@@ -20,20 +20,20 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-if 'analysis_data' not in st.session_state:
+if 'current_data' not in st.session_state or 'last_analysis' not in st.session_state:
     st.warning("⚠️ Please start from the main page and upload data first.")
     st.stop()
 
 # Display analysis results
 st.title("🔍 Data Analysis Results")
 
-if 'current_data' in st.session_state and 'last_analysis' in st.session_state:
+if st.session_state.last_analysis:
     st.info(st.session_state.last_analysis)
-    
+
     # Q&A section
     st.header("Ask Follow-up Questions")
     user_question = st.text_input("What would you like to know about the data?")
-    
+
     if user_question:
         if st.button("Ask Question"):
             with st.spinner("Getting answer..."):
@@ -43,7 +43,7 @@ if 'current_data' in st.session_state and 'last_analysis' in st.session_state:
                     user_question
                 )
                 st.info(answer)
-                
+
                 # Store question and answer in history
                 if 'qa_history' not in st.session_state:
                     st.session_state.qa_history = []
@@ -51,7 +51,7 @@ if 'current_data' in st.session_state and 'last_analysis' in st.session_state:
                     "question": user_question,
                     "answer": answer
                 })
-    
+
     # Display Q&A history
     if 'qa_history' in st.session_state and st.session_state.qa_history:
         st.subheader("Previous Questions & Answers")

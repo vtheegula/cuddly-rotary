@@ -52,35 +52,7 @@ def main():
                         </script>
                     """
                     st.markdown(js_code, unsafe_allow_html=True)
-                    st.success("Analysis complete! Check the new window for results.")
-
-            # Q&A section
-            if st.session_state.analysis_data:
-                st.header("4. Ask Follow-up Questions")
-                user_question = st.text_input("What would you like to know about the data?")
-
-                if user_question:
-                    if st.button("Ask Question"):
-                        with st.spinner("Getting answer..."):
-                            answer = ask_followup_question(
-                                df,
-                                st.session_state.last_analysis,
-                                user_question
-                            )
-                            st.info(answer)
-
-                            # Store question and answer in history
-                            st.session_state.qa_history.append({
-                                "question": user_question,
-                                "answer": answer
-                            })
-
-                # Display Q&A history
-                if st.session_state.qa_history:
-                    st.subheader("Previous Questions & Answers")
-                    for qa in st.session_state.qa_history:
-                        with st.expander(f"Q: {qa['question']}"):
-                            st.write(qa['answer'])
+                    st.success("Analysis complete! Check the new window for results and ask follow-up questions there.")
 
         except Exception as e:
             st.error(f"Error processing file: {str(e)}")
