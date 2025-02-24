@@ -23,69 +23,73 @@ initialize_session_state()
 
 def main():
     st.title("📊 CSV Data Analyzer with AI")
-    
+
     # File upload section
     st.header("1. Upload Your CSV File")
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
-    
+
     if uploaded_file is not None:
         try:
             # Read and display the data
             df = pd.read_csv(uploaded_file)
             st.session_state.current_data = df
-            
+
             st.header("2. Data Preview")
             st.dataframe(df, use_container_width=True)
-            
+
             # Analysis section
-            st.header("3. Analysis")
-            col1, col2 = st.columns([1, 2])
-            
-            with col1:
-                if st.button("🔍 Analyze with AI", type="primary"):
-                    with st.spinner("Analyzing your data..."):
-                        analysis = analyze_data(df)
-                        st.session_state.last_analysis = analysis
-                        
-            with col2:
-                if st.session_state.last_analysis:
-                    st.info(st.session_state.last_analysis)
-            
+            st.header("3. Generate Analysis")
+            if st.button("🔍 Analyze with AI", type="primary"):
+                with st.spinner("Analyzing your data..."):
+                    analysis = analyze_data(df)
+                    st.session_state.last_analysis = analysis
+                    st.session_state.analysis_data = True
+
+                    # Create link to analysis page
+                    analysis_url = f"{st.secrets.get('REPL_SLUG', '')}/pages/analysis"
+                    js_code = f"""
+                        <script>
+                        window.open('{analysis_url}', '_blank', 'width=800,height=600');
+                        </script>
+                    """
+                    st.markdown(js_code, unsafe_allow_html=True)
+                    st.success("Analysis complete! Check the new window for results.")
+
             # Q&A section
-            if st.session_state.last_analysis:
+            if st.session_state.analysis_data: # Use the new flag to check if analysis is done
                 st.header("4. Ask Follow-up Questions")
                 user_question = st.text_input("What would you like to know about the data?")
-                
+
                 if user_question:
                     if st.button("Ask Question"):
                         with st.spinner("Getting answer..."):
                             answer = ask_followup_question(
-                                df, 
+                                df,
                                 st.session_state.last_analysis,
                                 user_question
                             )
                             st.info(answer)
-                            
+
                             # Store question and answer in history
                             st.session_state.qa_history.append({
                                 "question": user_question,
                                 "answer": answer
                             })
-                
+
                 # Display Q&A history
                 if st.session_state.qa_history:
                     st.subheader("Previous Questions & Answers")
                     for qa in st.session_state.qa_history:
                         with st.expander(f"Q: {qa['question']}"):
                             st.write(qa['answer'])
-                            
+
         except Exception as e:
             st.error(f"Error processing file: {str(e)}")
-            
+
     else:
         # Display instructions when no file is uploaded
         st.info("👆 Upload a CSV file to get started!")
-        
+
         # Sample capabilities section
         with st.expander("ℹ️ What can this app do?"):
             st.write("""
