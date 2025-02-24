@@ -45,18 +45,17 @@ def main():
                     st.session_state.last_analysis = analysis
                     st.session_state.analysis_data = True
 
-                    # Create link to analysis page
-                    analysis_url = f"{st.secrets.get('REPL_SLUG', '')}/pages/analysis"
-                    js_code = f"""
+                    # Open analysis in new window using JavaScript
+                    js_code = """
                         <script>
-                        window.open('{analysis_url}', '_blank', 'width=800,height=600');
+                        window.open('/pages/analysis', '_blank', 'width=800,height=600');
                         </script>
                     """
                     st.markdown(js_code, unsafe_allow_html=True)
                     st.success("Analysis complete! Check the new window for results.")
 
             # Q&A section
-            if st.session_state.analysis_data: # Use the new flag to check if analysis is done
+            if st.session_state.analysis_data:
                 st.header("4. Ask Follow-up Questions")
                 user_question = st.text_input("What would you like to know about the data?")
 
