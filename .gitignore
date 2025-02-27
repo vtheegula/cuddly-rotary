@@ -9,17 +9,24 @@ __pycache__/
 *$py.class
 .Python
 .pythonlibs/
+dist/
+build/
+*.egg-info/
 
 # Streamlit
 .streamlit/secrets.toml
+.streamlit/config.toml
 
 # Virtual Environment
 venv/
 env/
+ENV/
 
 # IDE
 .idea/
 .vscode/
+*.swp
+*.swo
 
 # Replit specific
 .replit
@@ -28,3 +35,12 @@ replit.nix
 .config/
 .upm/
 *.lock
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# OS specific
+.DS_Store
+Thumbs.db
