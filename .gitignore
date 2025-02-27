@@ -1,0 +1,30 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.pythonlibs/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Virtual Environment
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# Replit specific
+.replit
+.cache/
+replit.nix
+.config/
+.upm/
+*.lock
