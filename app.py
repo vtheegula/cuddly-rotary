@@ -10,7 +10,7 @@ load_dotenv()
 
 # Page configuration
 st.set_page_config(
-    page_title="CSV Data Analyzer",
+    page_title="Gen-AI for Analysis",
     page_icon="📊",
     layout="wide"
 )
@@ -22,7 +22,7 @@ load_css()
 initialize_session_state()
 
 def main():
-    st.title("📊 CSV Data Analyzer with AI")
+    st.title("📊 Gen-AI Analysis")
 
     # File upload section
     st.header("1. Upload Your CSV File")
