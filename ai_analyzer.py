@@ -2,8 +2,7 @@ import os
 from openai import OpenAI
 import pandas as pd
 
-# the newest OpenAI model is "gpt-4o" which was released May 13, 2024.
-# do not change this unless explicitly requested by the user
+# Updated comment for clarity
 client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 def analyze_data(df: pd.DataFrame) -> str:
