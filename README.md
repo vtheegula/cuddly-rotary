@@ -16,8 +16,14 @@ A powerful Streamlit web application designed for intuitive CSV data analysis, l
 2. Install dependencies:
 ```bash
 sudo apt update
+```
+```bash
 sudo apt install python3-pip
+```
+```bash
 sudo python3 -m pip install streamlit
+```
+```bash
 pip install streamlit openai pandas python-dotenv
 ```
 
